@@ -23,7 +23,7 @@ from blueprint.plain import plain_questions
 from blueprint.workspace import LOG_NAME, PRD_NAME, SKELETON_DIR, current_version, read_prd
 
 ROOT = Path(__file__).resolve().parent.parent
-REPO_URL = "https://github.com/hubooooooo/agent-workshop"
+REPO_URL = "https://github.com/fengwunongyinghuachuanyi/agent-workshop"
 _SKIP_PARTS = {".venv", "venv", "node_modules", "__pycache__", ".git", ".pytest_cache"}
 _SKIP_NAMES = {".env", ".DS_Store"}
 

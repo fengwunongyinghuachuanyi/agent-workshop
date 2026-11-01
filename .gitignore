@@ -238,3 +238,11 @@ out/
 
 # 网页界面源码的依赖（构建产物提交在 blueprint/web/static/）
 web/node_modules/
+
+# Private local configuration and credentials
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+runtime.local.json

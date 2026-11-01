@@ -47,7 +47,7 @@ function Sidebar({
     <div className="flex h-full flex-col">
       <div className="flex h-12 shrink-0 items-center gap-2 px-4">
         <a href="#/" onClick={onNavigate} className="flex items-center gap-2 text-sm font-semibold tracking-tight">
-          <span className="grid size-6 place-items-center rounded-md bg-foreground font-mono text-xs text-background">ab</span>
+          <span className="grid size-6 place-items-center rounded-md bg-foreground font-mono text-xs text-background">AW</span>
           Agent 工坊
         </a>
         <Button variant="ghost" size="icon-sm" className="ms-auto md:hidden" onClick={onNavigate} aria-label="关闭菜单">
