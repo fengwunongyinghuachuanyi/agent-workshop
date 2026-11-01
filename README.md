@@ -6,7 +6,6 @@
 
 **把一个 Agent 点子，推进为可确认的需求、架构方案和开发交接包。**
 
-[![Test](https://github.com/fengwunongyinghuachuanyi/agent-workshop/actions/workflows/test.yml/badge.svg)](https://github.com/fengwunongyinghuachuanyi/agent-workshop/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 
@@ -133,7 +132,7 @@ npm ci
 npm run build
 ```
 
-网页源码位于 `web/`，运行产物位于 `blueprint/web/static/`。CI 会运行 Python 测试、离线评估和网页构建一致性检查。源码使用者运行已提交的网页产物时，不需要安装 Node.js。
+网页源码位于 `web/`，运行产物位于 `blueprint/web/static/`。提交前请运行 Python 测试、离线评估和网页构建，并确认静态产物与源码一致。本次发行未启用 GitHub Actions。源码使用者运行已提交的网页产物时，不需要安装 Node.js。
 
 ## 文档
 
