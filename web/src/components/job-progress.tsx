@@ -1,4 +1,4 @@
-import { CheckIcon, LoaderCircleIcon, XIcon } from "lucide-react"
+import { CheckIcon, LoaderCircleIcon, XIcon } from "@/components/workshop-icons"
 import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"

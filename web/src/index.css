@@ -87,91 +87,6 @@
     }
 }
 
-/* 视觉参考 assistant-ui.com：暖米白底、墨色主色、细线分隔、少阴影、等宽字体做编号和标签。
-   四种选型状态（必选 / 二期 / 待确认 / 放弃）保留低饱和的颜色，其余都是黑白灰。 */
-:root {
-    --background: oklch(0.985 0.003 85);
-    --foreground: oklch(0.2 0.006 70);
-    --card: oklch(0.995 0.002 85);
-    --card-foreground: oklch(0.2 0.006 70);
-    --popover: oklch(0.995 0.002 85);
-    --popover-foreground: oklch(0.2 0.006 70);
-    --primary: oklch(0.2 0.006 70);
-    --primary-foreground: oklch(0.985 0.003 85);
-    --secondary: oklch(0.955 0.004 85);
-    --secondary-foreground: oklch(0.2 0.006 70);
-    --muted: oklch(0.955 0.004 85);
-    --muted-foreground: oklch(0.5 0.008 70);
-    --accent: oklch(0.945 0.005 85);
-    --accent-foreground: oklch(0.2 0.006 70);
-    --destructive: oklch(0.56 0.19 27);
-    --border: oklch(0.905 0.005 85);
-    --input: oklch(0.88 0.006 85);
-    --ring: oklch(0.6 0.01 70);
-    --radius: 0.5rem;
-    --ok: oklch(0.52 0.11 150);
-    --ok-soft: oklch(0.95 0.03 150);
-    --warn: oklch(0.6 0.12 70);
-    --warn-soft: oklch(0.95 0.04 80);
-    --ask: oklch(0.52 0.13 285);
-    --ask-soft: oklch(0.95 0.03 285);
-    --link: oklch(0.5 0.15 255);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.975 0.004 85);
-    --sidebar-foreground: oklch(0.2 0.006 70);
-    --sidebar-primary: oklch(0.2 0.006 70);
-    --sidebar-primary-foreground: oklch(0.985 0.003 85);
-    --sidebar-accent: oklch(0.945 0.005 85);
-    --sidebar-accent-foreground: oklch(0.2 0.006 70);
-    --sidebar-border: oklch(0.905 0.005 85);
-    --sidebar-ring: oklch(0.6 0.01 70);
-}
-
-.dark {
-    --background: oklch(0.17 0.004 70);
-    --foreground: oklch(0.94 0.004 85);
-    --card: oklch(0.2 0.004 70);
-    --card-foreground: oklch(0.94 0.004 85);
-    --popover: oklch(0.21 0.004 70);
-    --popover-foreground: oklch(0.94 0.004 85);
-    --primary: oklch(0.94 0.004 85);
-    --primary-foreground: oklch(0.19 0.004 70);
-    --secondary: oklch(0.24 0.005 70);
-    --secondary-foreground: oklch(0.94 0.004 85);
-    --muted: oklch(0.24 0.005 70);
-    --muted-foreground: oklch(0.68 0.008 80);
-    --accent: oklch(0.26 0.005 70);
-    --accent-foreground: oklch(0.94 0.004 85);
-    --destructive: oklch(0.7 0.17 25);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 16%);
-    --ring: oklch(0.55 0.01 70);
-    --ok: oklch(0.78 0.13 150);
-    --ok-soft: oklch(0.3 0.05 150);
-    --warn: oklch(0.8 0.12 75);
-    --warn-soft: oklch(0.32 0.05 75);
-    --ask: oklch(0.78 0.12 285);
-    --ask-soft: oklch(0.3 0.06 285);
-    --link: oklch(0.75 0.12 255);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.2 0.004 70);
-    --sidebar-foreground: oklch(0.94 0.004 85);
-    --sidebar-primary: oklch(0.94 0.004 85);
-    --sidebar-primary-foreground: oklch(0.19 0.004 70);
-    --sidebar-accent: oklch(0.26 0.005 70);
-    --sidebar-accent-foreground: oklch(0.94 0.004 85);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.55 0.01 70);
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -182,11 +97,10 @@
   button:not(:disabled), [role="button"]:not(:disabled) {
     cursor: pointer;
     }
-  /* 整体放大一号：Tailwind 的字号、间距、按钮高度、栏宽都以 rem 计，跟着根字号等比放大，比例不变。
-     用百分比是为了尊重浏览器里设置的默认字号（默认 16px → 17px）。 */
+  /* 保持浏览器默认字号，让 4px 间距与控件尺寸准确对应。 */
   html {
     @apply font-sans;
-    font-size: 106.25%;
+    font-size: 100%;
     }
 }
 
@@ -194,7 +108,7 @@
 
 @custom-variant data-closed (&:where([data-state="closed"], [data-closed]:not([data-closed="false"])));
 @layer base {
-  h1, h2, h3 { letter-spacing: -0.01em; }
+  h1, h2, h3 { letter-spacing: 0; }
 }
 
 /* 文档阅读样式（PRD 原文等） */
@@ -213,3 +127,116 @@
 .doc td:first-child, .doc th:first-child { white-space: nowrap; }
 .doc th { font-family: var(--font-mono); font-weight: 400; font-size: 0.8em; color: var(--muted-foreground); }
 .doc blockquote { border-left: 2px solid var(--border); padding-left: 1em; color: var(--muted-foreground); }
+
+/* Interface refinement guided by unslop, Damir Sokolovsky (@heydamir), CC BY 4.0.
+   https://github.com/heydamir/unslop — Agent Workshop direction: a precise plan workbench. */
+:root {
+  --background: #fafafa; --foreground: #202124;
+  --card: #fff; --card-foreground: #202124;
+  --popover: #fff; --popover-foreground: #202124;
+  --primary: #245ac0; --primary-foreground: #fff;
+  --secondary: #f0f1f3; --secondary-foreground: #202124;
+  --muted: #f0f1f3; --muted-foreground: #63676e;
+  --accent: #eceef1; --accent-foreground: #202124;
+  --border: #e0e2e6; --input: #c9cdd4; --ring: #245ac0;
+  --sidebar: #f3f4f6; --sidebar-foreground: #202124;
+  --sidebar-accent: #e7e9ed; --sidebar-accent-foreground: #202124;
+  --sidebar-border: #e0e2e6; --sidebar-ring: #245ac0;
+  --sidebar-primary: #245ac0; --sidebar-primary-foreground: #fff;
+  --ok: #267248; --ok-soft: #e9f4ed;
+  --warn: #865711; --warn-soft: #fbf4e7;
+  --ask: #315eaf; --ask-soft: #eaf0fb; --link: #245ac0;
+  --radius: 0.75rem;
+  --destructive: #c13232;
+  --chart-1: #cdd1d8; --chart-2: #9096a0; --chart-3: #6e7580; --chart-4: #4d5664; --chart-5: #343d4b;
+}
+.dark {
+  --destructive: #f08080;
+  --background: #141517; --foreground: #ededee;
+  --card: #1b1c1f; --card-foreground: #ededee;
+  --popover: #202125; --popover-foreground: #ededee;
+  --primary: #ededee; --primary-foreground: #17181b;
+  --secondary: #25272b; --secondary-foreground: #ededee;
+  --muted: #25272b; --muted-foreground: #a2a6ae;
+  --accent: #2b2d32; --accent-foreground: #ededee;
+  --border: #303238; --input: #41444c; --ring: #8eaff0;
+  --sidebar: #191a1d; --sidebar-foreground: #ededee;
+  --sidebar-accent: #292b30; --sidebar-accent-foreground: #ededee;
+  --sidebar-border: #303238; --sidebar-ring: #8eaff0;
+  --sidebar-primary: #8eaff0; --sidebar-primary-foreground: #17181b;
+  --ok: #8bd2a5; --ok-soft: #20352a;
+  --warn: #dfbb7c; --warn-soft: #332c20;
+  --ask: #9cbaf2; --ask-soft: #242f43; --link: #9cbaf2;
+}
+body { -webkit-font-smoothing: antialiased; }
+svg.lucide { stroke-width: 1.5; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+.workshop-sidebar { width: 256px; }
+.brand-mark { display: grid; place-items: center; width: 32px; height: 36px; color: var(--foreground); }
+.brand-mark svg { width: 28px; height: 28px; }
+.workshop-nav.is-active { color: var(--sidebar-primary); }
+.workshop-create { margin-bottom: 8px; background: var(--foreground); color: var(--background); min-height: 40px; }
+.workshop-create:hover, .workshop-create.is-active { background: color-mix(in srgb, var(--foreground) 85%, var(--background)); color: var(--background); }
+.sidebar-empty { margin: 0 12px 0 36px; padding: 4px 0; font-size: 12px; line-height: 20px; color: var(--muted-foreground); }
+.workshop-topbar { background: var(--card); }
+.workshop-kicker { display: flex; align-items: center; gap: 8px; font-size: 12px; line-height: 20px; color: var(--muted-foreground); }
+.workshop-kicker > span { width: 6px; height: 6px; background: var(--link); border-radius: 2px; }
+.workshop-home { padding-top: 48px; padding-bottom: 48px; }
+.workshop-intro { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); align-items: center; gap: clamp(32px, 4vw, 64px); }
+.workshop-intro-copy h1 { margin: 20px 0; font-size: clamp(32px, 3.3vw, 48px); line-height: 1.3; font-weight: 500; letter-spacing: -.025em; }
+.workshop-lead { max-width: 480px; font-size: 14px; line-height: 1.9; color: var(--muted-foreground); }
+.workshop-steps { margin: 32px 0; }
+.workshop-steps li { display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid var(--border); }
+.workshop-step-number { padding-top: 2px; width: 24px; flex-shrink: 0; color: var(--link); font: 12px/20px var(--font-mono); font-variant-numeric: tabular-nums; }
+.workshop-steps h2 { font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0; }
+.workshop-steps li p { margin-top: 4px; font-size: 13px; line-height: 22px; color: var(--muted-foreground); }
+.workshop-start-note { margin-top: 12px; font-size: 12px; line-height: 20px; color: var(--muted-foreground); }
+.workshop-output { overflow: hidden; border: 1px solid var(--border); border-radius: 16px; background: var(--card); }
+.workshop-output-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.workshop-output-header > span:last-child { color: var(--muted-foreground); font-size: 12px; }
+.workshop-output-body { padding: 24px; }
+.workshop-output-row { display: flex; gap: 12px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+.workshop-output-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.workshop-output-icon { display: grid; place-items: center; width: 36px; height: 40px; flex-shrink: 0; border: 1px solid var(--border); border-radius: 8px; color: var(--muted-foreground); }
+.workshop-output-icon svg { width: 18px; height: 18px; }
+.workshop-output-row h3 { font-size: 14px; line-height: 20px; font-weight: 500; }
+.workshop-output-row p { margin-top: 4px; color: var(--muted-foreground); font-size: 12px; line-height: 20px; }
+.workshop-output-file { display: inline-block; margin-top: 12px; font: 11px/20px var(--font-mono); color: var(--muted-foreground); overflow-wrap: anywhere; }
+.workshop-output-footer { display: flex; gap: 12px; align-items: center; padding: 20px 24px; border-top: 1px solid var(--border); background: var(--muted); font-size: 12px; line-height: 20px; }
+.workshop-output-footer p > span { color: var(--muted-foreground); }
+.workshop-document-line { width: 2px; height: 32px; background: var(--link); flex-shrink: 0; }
+.workshop-page-heading { margin-bottom: 32px; }
+.workshop-page-heading h1 { margin: 16px 0 12px; font-size: 32px; line-height: 1.35; font-weight: 500; letter-spacing: -.02em; }
+.workshop-page-heading > p:last-child { font-size: 14px; line-height: 24px; color: var(--muted-foreground); }
+.workshop-settings-form { padding-top: 8px; }
+.workshop-provider { overflow-wrap: anywhere; }
+.workshop-provider.is-selected { border-color: var(--link); background: var(--ask-soft); }
+.workshop-provider:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+.workshop-product-list a:focus-visible { outline-offset: -3px; }
+.workshop-callout { box-shadow: none; }
+@media (min-width: 1440px) { .workshop-home { padding: 64px; } }
+@media (max-width: 1100px) {
+  .workshop-intro { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .workshop-intro-copy { max-width: 640px; }
+  .workshop-output { max-width: 640px; }
+}
+@media (max-width: 767px) {
+  .workshop-home { padding-top: 32px; padding-bottom: 32px; }
+  .workshop-topbar { height: 56px; }
+  .workshop-intro-copy h1 { font-size: 32px; }
+  .workshop-page-heading h1 { font-size: 28px; }
+  .workshop-output-header, .workshop-output-body, .workshop-output-footer { padding: 20px; }
+  .workshop-nav { min-height: 44px; }
+  .workshop-provider { min-height: 64px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Keep the setup notice readable without competing with the product flow. */
+@media (min-width: 640px) {
+  .workshop-callout:has(a[href="#/settings"]) { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; align-items: center; }
+  .workshop-callout:has(a[href="#/settings"]) > div:first-child { grid-column: 1; }
+  .workshop-callout:has(a[href="#/settings"]) > div:nth-child(2) { grid-column: 1; }
+  .workshop-callout:has(a[href="#/settings"]) > div:last-child { grid-column: 2; grid-row: 1 / 3; margin-top: 0; }
+}

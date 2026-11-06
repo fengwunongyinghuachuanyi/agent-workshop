@@ -1,4 +1,4 @@
-import { ArrowRightIcon, FolderOpenIcon, FolderSearchIcon, RefreshCwIcon, ScaleIcon, ScanSearchIcon } from "lucide-react"
+import { ArrowRightIcon, FolderOpenIcon, FolderSearchIcon, RefreshCwIcon, ScaleIcon, ScanSearchIcon } from "@/components/workshop-icons"
 import { useCallback, useEffect, useState } from "react"
 import { toast } from "sonner"
 
@@ -55,9 +55,9 @@ export function AuditsPage() {
     return (
       <Screen>
         <TopBar title="检查过的项目" />
-        <ScrollBody className="max-w-xl py-16">
+        <ScrollBody className="max-w-3xl py-12">
           <ModeCallouts />
-          <h1 className="text-xl font-semibold tracking-tight">看看一个已有的 Agent 项目还差什么</h1>
+          <div className="workshop-page-heading"><p className="workshop-kicker"><span /> 项目检查</p><h1>看看已有的 Agent<br />还差哪些关键机制</h1></div>
           <p className="mt-2 text-sm text-muted-foreground">
             选一个项目文件夹，引擎让 agent 读代码，告诉你它离一个靠谱的 Agent 还差哪些机制，并反推一份它本该有的需求文档。
           </p>

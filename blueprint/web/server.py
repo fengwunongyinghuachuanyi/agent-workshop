@@ -310,6 +310,13 @@ class App:
         if not self.configured():
             raise ValueError("还没配置模型，先到「模型设置」填好 API Key。")
 
+        # The browser navigates as soon as the job is returned. Register the
+        # pending audit before starting its worker, which writes the full inventory.
+        out_dir.mkdir(parents=True, exist_ok=True)
+        inventory = out_dir / "inventory.json"
+        if not inventory.exists() and not (out_dir / "audit.json").exists():
+            inventory.write_text(json.dumps({"root": str(project)}, ensure_ascii=False), encoding="utf-8")
+
         def task(log):
             from blueprint.reverse import run_audit
             audit, _doc = run_audit(project, self.make_runner(), out_dir, log=log, rejudge=rejudge, resume=resume)

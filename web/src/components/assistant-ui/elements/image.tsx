@@ -19,7 +19,7 @@ import {
   RefreshCwIcon,
   ShieldAlertIcon,
   XIcon,
-} from "lucide-react";
+} from "@/components/workshop-icons";
 import type {
   ImageMessagePart,
   ImageMessagePartComponent,

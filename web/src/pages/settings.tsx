@@ -52,6 +52,7 @@ export function SettingsPage() {
     <Screen>
       <TopBar title="模型设置" />
       <ScrollBody className="max-w-2xl">
+        <div className="workshop-page-heading"><p className="workshop-kicker"><span /> 工坊设置</p><h1>连接你的模型</h1><p>为需求对话与方案推导选择模型服务</p></div>
         <p className="mb-6 text-sm text-muted-foreground">
           引擎靠大模型对话和推导方案。一份方案约 5–7 次调用、2.5–4 万 tokens；每次推导最多 40 次调用、150 万 tokens，超了会自动停下，不会无限扣费。
         </p>
@@ -61,7 +62,7 @@ export function SettingsPage() {
           </Callout>
         )}
 
-        <form onSubmit={submit} className="space-y-6">
+        <form onSubmit={submit} className="workshop-settings-form space-y-8">
           <section>
             <div className="mb-3 text-sm font-medium">模型服务商</div>
             <div className="grid gap-2 sm:grid-cols-3">
@@ -70,12 +71,13 @@ export function SettingsPage() {
                   type="button"
                   key={p.key}
                   onClick={() => choose(p.key)}
+                  aria-pressed={provider === p.key}
                   className={cn(
-                    "rounded-lg border px-3 py-2.5 text-left text-sm transition-colors",
-                    provider === p.key ? "border-foreground bg-card" : "hover:bg-muted/60",
+                    "workshop-provider rounded-lg border px-4 py-4 text-left text-sm transition-colors",
+                    provider === p.key ? "is-selected border-foreground bg-card" : "hover:bg-muted/60",
                   )}
                 >
-                  <div className="font-medium">{p.name}</div>
+                  <div className="flex items-center justify-between gap-2 font-medium">{p.name}<span className="workshop-radio-dot" aria-hidden="true" /></div>
                   <div className="mt-0.5 font-mono text-xs text-muted-foreground">{p.model}</div>
                 </button>
               ))}

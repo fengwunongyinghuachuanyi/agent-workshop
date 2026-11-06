@@ -1,5 +1,5 @@
 import { useAui } from "@assistant-ui/react"
-import { DownloadIcon, FolderOpenIcon } from "lucide-react"
+import { DownloadIcon, FolderOpenIcon } from "@/components/workshop-icons"
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react"
 import { toast } from "sonner"
 
@@ -201,7 +201,7 @@ function PlanTabs({
 
   return (
     <div className="flex min-h-0 flex-1">
-      <nav className="hidden w-44 shrink-0 flex-col border-e lg:flex">
+      <nav aria-label="产品方案" className="workshop-product-nav hidden w-44 shrink-0 flex-col border-e lg:flex">
         <div className="min-h-0 flex-1 overflow-y-auto px-2 py-3">
           {NAV.map((g, i) => (
             <div key={i} className={cn(i > 0 && "mt-4")}>
@@ -212,7 +212,7 @@ function PlanTabs({
                   href={productHref(product.slug, key)}
                   className={cn(
                     "flex h-8 items-center rounded-md px-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
-                    active === key && "bg-muted font-medium text-foreground",
+                    active === key && "is-active bg-muted font-medium text-foreground",
                   )}
                 >
                   {label}

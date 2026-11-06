@@ -1,5 +1,5 @@
 import { useAssistantDataUI, useAuiState, type DataMessagePartProps } from "@assistant-ui/react"
-import { ArrowRightIcon, CheckIcon, HandIcon, ShieldAlertIcon, WrenchIcon, XIcon } from "lucide-react"
+import { ArrowRightIcon, CheckIcon, HandIcon, ShieldAlertIcon, WrenchIcon, XIcon } from "@/components/workshop-icons"
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
 
 import { ChatPane } from "@/components/chat/chat-pane"

@@ -570,3 +570,39 @@ def test_one_running_audit_per_project_has_its_own_message():
     with pytest.raises(ValueError, match="正在检查中"):
         jobs.start("audit", "audit-x", lambda log: None)
     gate.set()
+
+
+def test_new_audit_is_readable_before_background_scan_finishes(server, app, tmp_path, monkeypatch):
+    """The UI can follow the create response immediately, even on a slow scan."""
+    from blueprint import reverse
+    project = tmp_path / "slow-scan-project"
+    project.mkdir()
+    (project / "agent.py").write_text("def reply(text): return text\n", encoding="utf-8")
+    gate = threading.Event()
+    original = reverse.run_audit
+
+    def delayed(*args, **kwargs):
+        if not gate.wait(10):
+            raise RuntimeError("test scan gate timed out")
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(reverse, "run_audit", delayed)
+    _srv, base = server
+    job = None
+    try:
+        status, body, _ = call(base + "/api/audits", {"path": str(project)})
+        assert status == 201
+        created = json.loads(body)
+        job = app.jobs.get(created["job"]["id"])
+        status, body, _ = call(base + "/api/audits/" + created["slug"])
+        assert status == 200
+        pending = json.loads(body)
+        assert pending["root"] == str(project.resolve())
+        assert not pending["finished"] and pending["job"]["status"] == "running"
+        listed = json.loads(call(base + "/api/audits")[1])["audits"]
+        assert created["slug"] in {a["slug"] for a in listed}
+    finally:
+        gate.set()
+        if job is not None:
+            wait_job(job)
+    assert job is not None and job.status == "done", job.error if job else "no job"

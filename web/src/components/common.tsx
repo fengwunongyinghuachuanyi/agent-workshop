@@ -1,4 +1,4 @@
-import { MenuIcon } from "lucide-react"
+import { MenuIcon } from "@/components/workshop-icons"
 import { createContext, useContext, type ReactNode } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -32,7 +32,7 @@ export function useShell() {
 export function TopBar({ title, actions }: { title: ReactNode; actions?: ReactNode }) {
   const { openSidebar } = useShell()
   return (
-    <header className="flex h-12 shrink-0 items-center gap-2 border-b px-3 sm:px-4">
+    <header className="workshop-topbar flex h-16 shrink-0 items-center gap-3 border-b px-4 sm:px-8">
       <Button variant="ghost" size="icon-sm" className="-ms-1 md:hidden" onClick={openSidebar} aria-label="打开菜单">
         <MenuIcon />
       </Button>
@@ -45,7 +45,7 @@ export function TopBar({ title, actions }: { title: ReactNode; actions?: ReactNo
 /** 小号等宽标签，assistant-ui 风格的分节标题。 */
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn("font-mono text-xs tracking-wider text-muted-foreground uppercase", className)}>
+    <div className={cn("font-mono text-xs text-muted-foreground", className)}>
       {children}
     </div>
   )
@@ -63,7 +63,7 @@ export const READING = "max-w-[44rem]"
 export function ScrollBody({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
-      <div className={cn("mx-auto w-full max-w-5xl px-4 py-6 sm:px-6", className)}>{children}</div>
+      <div className={cn("workshop-body mx-auto w-full max-w-[1440px] px-5 py-8 sm:px-8", className)}>{children}</div>
     </div>
   )
 }
@@ -82,7 +82,7 @@ export function Callout({
   return (
     <div
       className={cn(
-        "mb-5 rounded-lg border px-4 py-3",
+        "workshop-callout mb-6 rounded-xl border px-4 py-4",
         tone === "warn" && "border-warn/30 bg-warn-soft",
         tone === "bad" && "border-destructive/30 bg-destructive/8",
         tone === "info" && "bg-muted",
@@ -112,7 +112,7 @@ export function ModeCallouts() {
         title="第一步：配置模型"
         action={<Button nativeButton={false} render={<a href="#/settings" />}>去配置</Button>}
       >
-        引擎要靠大模型来对话和推导方案。推荐 DeepSeek，便宜、国内可直连，充值几块钱就能用很久。
+        引擎要靠大模型来对话和推导方案。请先选择服务商、填写 API Key 并测试连接，再开始需求对话。
       </Callout>
     )
   }
@@ -137,7 +137,7 @@ const TONE = {
 
 export function Chip({ tone = "muted", children, className }: { tone?: keyof typeof TONE; children: ReactNode; className?: string }) {
   return (
-    <span className={cn("inline-flex h-5 items-center rounded-full px-2 text-xs font-medium whitespace-nowrap", TONE[tone], className)}>
+    <span className={cn("inline-flex h-5 items-center rounded-md px-2 text-xs font-medium whitespace-nowrap", TONE[tone], className)}>
       {children}
     </span>
   )

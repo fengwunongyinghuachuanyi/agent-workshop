@@ -9,6 +9,8 @@ PY_URL="https://www.python.org/ftp/python/${PY_VER}/${PY_PKG}"
 find_python() {
   local cand maj min
   for cand in \
+      ".venv/bin/python" \
+      "$HOME"/.local/share/uv/python/*/bin/python3 \
       "$HOME/.local/bin/python3.12" "$HOME/.local/bin/python3.11" "$HOME/.local/bin/python3.10" \
       "/opt/homebrew/bin/python3.12" "/opt/homebrew/bin/python3.11" "/opt/homebrew/bin/python3" \
       "/usr/local/bin/python3.12" "/usr/local/bin/python3.11" "/usr/local/bin/python3" \

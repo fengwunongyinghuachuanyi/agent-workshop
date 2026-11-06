@@ -1,4 +1,4 @@
-import { ArrowRightIcon, FileTextIcon } from "lucide-react"
+import { ArrowRightIcon, FileTextIcon } from "@/components/workshop-icons"
 import { useEffect, useState, type ReactNode } from "react"
 
 import { Callout, Chip, Eyebrow } from "@/components/common"

@@ -1,5 +1,5 @@
 import { useAuiState } from "@assistant-ui/react"
-import { RotateCcwIcon } from "lucide-react"
+import { RotateCcwIcon } from "@/components/workshop-icons"
 
 import { useChatControls } from "@/components/chat/chat-storage"
 import { Button } from "@/components/ui/button"

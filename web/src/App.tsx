@@ -1,4 +1,4 @@
-import { PlusIcon, ScanSearchIcon, SettingsIcon, XIcon } from "lucide-react"
+import { AuditHistoryIcon, FolderIcon, LayersIcon, PlusIcon, ScanSearchIcon, SettingsIcon, XIcon } from "@/components/workshop-icons"
 import { useCallback, useEffect, useState } from "react"
 
 import { SettingsContext, ShellContext } from "@/components/common"
@@ -26,8 +26,8 @@ function useSystemDarkMode() {
 
 const itemClass = (active: boolean) =>
   cn(
-    "flex h-8 items-center gap-2 rounded-md px-2 text-sm text-sidebar-foreground/75 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground",
-    active && "bg-sidebar-accent font-medium text-sidebar-foreground",
+    "workshop-nav flex min-h-9 items-center gap-2 rounded-lg px-3 text-sm text-sidebar-foreground/75 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground",
+    active && "is-active bg-sidebar-accent font-medium text-sidebar-foreground",
   )
 
 function Sidebar({
@@ -45,18 +45,18 @@ function Sidebar({
 }) {
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-12 shrink-0 items-center gap-2 px-4">
-        <a href="#/" onClick={onNavigate} className="flex items-center gap-2 text-sm font-semibold tracking-tight">
-          <span className="grid size-6 place-items-center rounded-md bg-foreground font-mono text-xs text-background">AW</span>
-          Agent 工坊
+      <div className="flex h-20 shrink-0 items-center gap-3 px-5">
+        <a href="#/" onClick={onNavigate} className="flex items-center gap-3 text-base font-medium" aria-label="Agent 工坊首页">
+          <span className="brand-mark"><LayersIcon aria-hidden="true" /></span>
+          <span>Agent 工坊<span className="mt-1 block font-mono text-xs font-normal text-muted-foreground">Agent Workshop</span></span>
         </a>
         <Button variant="ghost" size="icon-sm" className="ms-auto md:hidden" onClick={onNavigate} aria-label="关闭菜单">
           <XIcon />
         </Button>
       </div>
 
-      <div className="px-2 pt-1">
-        <a href="#/new" onClick={onNavigate} className={itemClass(route.page === "new")}>
+      <div className="space-y-1 px-3 pt-2">
+        <a href="#/new" onClick={onNavigate} className={cn(itemClass(route.page === "new"), "workshop-create")} aria-current={route.page === "new" ? "page" : undefined}>
           <PlusIcon className="size-4" /> 新建产品
         </a>
         <a href="#/audits/new" onClick={onNavigate} className={itemClass(route.page === "audit-new")}>
@@ -64,18 +64,19 @@ function Sidebar({
         </a>
       </div>
 
-      <nav className="mt-4 min-h-0 flex-1 overflow-y-auto px-2 pb-2">
+      <nav aria-label="工作区" className="mt-8 min-h-0 flex-1 overflow-y-auto px-3 pb-4">
         <a
           href="#/"
           onClick={onNavigate}
           className={cn(
-            "mb-1 block px-2 font-mono text-xs tracking-wider text-muted-foreground hover:text-foreground",
-            route.page === "home" && "text-foreground",
+            "workshop-nav-section mb-2 flex h-9 items-center gap-2 rounded-lg px-3 text-sm text-muted-foreground hover:bg-sidebar-accent hover:text-foreground",
+            route.page === "home" && "is-active bg-sidebar-accent text-foreground",
           )}
         >
-          我的产品
+          <FolderIcon className="size-4" /> 我的产品
+          <span className="ms-auto font-mono text-xs">{products?.length ?? "—"}</span>
         </a>
-        {products?.length === 0 && <p className="px-2 py-1 text-xs text-muted-foreground">还没有产品</p>}
+        {products?.length === 0 && <p className="sidebar-empty">新建后，产品会保存在这里</p>}
         {products?.map((p) => (
           <a
             key={p.slug}
@@ -95,13 +96,14 @@ function Sidebar({
           href="#/audits"
           onClick={onNavigate}
           className={cn(
-            "mt-4 mb-1 block px-2 font-mono text-xs tracking-wider text-muted-foreground hover:text-foreground",
-            route.page === "audits" && "text-foreground",
+            "workshop-nav-section mt-6 mb-2 flex h-9 items-center gap-2 rounded-lg px-3 text-sm text-muted-foreground hover:bg-sidebar-accent hover:text-foreground",
+            route.page === "audits" && "is-active bg-sidebar-accent text-foreground",
           )}
         >
-          检查过的项目
+          <AuditHistoryIcon className="size-4" /> 检查过的项目
+          <span className="ms-auto font-mono text-xs">{audits?.length ?? "—"}</span>
         </a>
-        {audits?.length === 0 && <p className="px-2 py-1 text-xs text-muted-foreground">还没有检查过</p>}
+        {audits?.length === 0 && <p className="sidebar-empty">项目检查记录会显示在这里</p>}
         {audits?.map((a) => (
           <a
             key={a.slug}
@@ -120,13 +122,14 @@ function Sidebar({
         ))}
       </nav>
 
-      <div className="border-t px-2 py-2">
-        <a href="#/settings" onClick={onNavigate} className={cn(itemClass(route.page === "settings"), "h-auto py-1.5")}>
+      <div className="border-t px-3 py-4">
+        <a href="#/settings" onClick={onNavigate} className={cn(itemClass(route.page === "settings"), "h-auto gap-3 py-3")}>
           <SettingsIcon className="size-4 shrink-0" />
           <span className="min-w-0 flex-1">
             <span className="block">模型设置</span>
             {settings && (
-              <span className="block truncate font-mono text-xs font-normal text-muted-foreground">
+              <span className="mt-1 flex items-center gap-2 truncate font-mono text-xs font-normal text-muted-foreground">
+                <span aria-hidden="true" className={cn("size-1.5 shrink-0 rounded-full", settings.mock ? "bg-warn" : settings.configured ? "bg-ok" : "bg-muted-foreground")} />
                 {settings.mock ? "离线演示" : settings.configured ? settings.model || "已配置模型" : "未配置模型"}
               </span>
             )}
@@ -187,10 +190,10 @@ export default function App() {
   return (
     <TooltipProvider>
       <ShellContext.Provider value={{ products, reloadProducts, audits, reloadAudits, openSidebar: () => setSidebarOpen(true) }}>
-        <div className="flex h-svh overflow-hidden">
+        <div className="workshop-app flex h-svh overflow-hidden">
           <aside
             className={cn(
-              "fixed inset-y-0 start-0 z-40 w-64 border-e bg-sidebar transition-transform md:static md:w-60 md:translate-x-0",
+              "workshop-sidebar fixed inset-y-0 start-0 z-40 w-64 shrink-0 border-e bg-sidebar transition-transform md:static md:translate-x-0",
               sidebarOpen ? "translate-x-0" : "-translate-x-full",
             )}
           >
@@ -198,7 +201,7 @@ export default function App() {
           </aside>
           {sidebarOpen && <div className="fixed inset-0 z-30 bg-foreground/20 md:hidden" onClick={closeSidebar} />}
 
-          <main className="flex min-w-0 flex-1 flex-col">
+          <main id="main-content" className="flex min-w-0 flex-1 flex-col">
             {error && <div className="mx-auto mt-10 max-w-xl px-4 text-center text-sm text-destructive">{error}</div>}
             {settings && (
               <SettingsContext.Provider value={{ settings, reload }}>

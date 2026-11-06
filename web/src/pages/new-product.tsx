@@ -15,12 +15,16 @@ const STARTERS = [
 
 function Welcome() {
   return (
-    <div className="mb-6 px-2">
-      <h1 className="text-2xl font-semibold tracking-tight">你想做一个什么样的 Agent？</h1>
-      <p className="mt-2 text-sm text-muted-foreground">
-        一句话就行。我会问你几个问题：给谁用、怎么用、什么不能做，信息够了就整理成需求，交给引擎推导方案。说不清的地方直接说不知道。
-      </p>
-    </div>
+    <section className="editorial-welcome" aria-label="开始需求对话">
+      <p className="editorial-eyebrow"><span /> Agent Workshop <span className="editorial-eyebrow-divider">/</span> 01 · 需求澄清</p>
+      <h1>从一个想法，<br /><mark>开始你的 Agent。</mark></h1>
+      <p className="editorial-intro">先说说你想解决什么问题。<br className="hidden sm:block" />我们一起把用户、场景和边界说清楚，再推进成可以开发的方案。</p>
+      <ol className="editorial-route" aria-label="从需求到交接的流程">
+        <li aria-current="step"><span>01</span> 说清需求</li>
+        <li><span>02</span> 推导方案</li>
+        <li><span>03</span> 开发交接</li>
+      </ol>
+    </section>
   )
 }
 
@@ -43,7 +47,8 @@ export function NewProductPage() {
     return (
       <Screen>
         <TopBar title="新建产品" />
-        <ScrollBody className="max-w-2xl">
+        <ScrollBody className="editorial-intake-setup">
+          <Welcome />
           <ModeCallouts />
         </ScrollBody>
       </Screen>
@@ -58,8 +63,8 @@ export function NewProductPage() {
             <ModeCallouts />
           </div>
         )}
-        <div className="min-h-0 flex-1">
-          <Thread components={{ Welcome, Finished }} placeholder="说说你的想法…" />
+        <div className="editorial-intake min-h-0 flex-1">
+          <Thread components={{ Welcome, Finished }} placeholder="描述你想做的 Agent" />
         </div>
       </ChatProvider>
     </Screen>

@@ -1,4 +1,4 @@
-import { ArrowRightIcon, CopyIcon, DownloadIcon } from "lucide-react"
+import { ArrowRightIcon, CopyIcon, DownloadIcon } from "@/components/workshop-icons"
 import { Fragment, useState, type ReactNode } from "react"
 import { toast } from "sonner"
 

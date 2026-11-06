@@ -1,5 +1,5 @@
 import type { Toolkit, ToolCallMessagePartProps } from "@assistant-ui/react"
-import { ArrowRightIcon } from "lucide-react"
+import { ArrowRightIcon } from "@/components/workshop-icons"
 import { useState } from "react"
 
 import { JobProgress, useJob } from "@/components/job-progress"
@@ -11,7 +11,7 @@ import { api, type Job } from "@/lib/api"
 // 服务端（blueprint/chat.py）发来 tool 事件时，对话里弹出这些卡片。卡片是 human tool：
 // 用户在卡片上确认后调用 addResult，对话随之结束；之后卡片原地变成推导进度。
 
-const CARD = "my-3 rounded-lg border bg-card p-4"
+const CARD = "editorial-tool-card my-3 rounded-lg border bg-card p-4"
 
 type StartedResult = { slug: string; job: Job }
 

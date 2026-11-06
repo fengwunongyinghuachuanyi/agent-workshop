@@ -52,7 +52,7 @@ import {
   RefreshCwIcon,
   SquareIcon,
   PlayIcon,
-} from "lucide-react";
+} from "@/components/workshop-icons";
 import {
   createContext,
   useContext,
@@ -204,6 +204,7 @@ const ThreadRoot: FC<{ isEmpty: boolean; autoFocus: boolean }> = ({
 
   return (
     <ThreadPrimitive.Root
+      data-empty={isEmpty}
       className="aui-root aui-thread-root bg-background @container flex h-full flex-col"
       style={{
         ["--thread-max-width" as string]: "44rem",
@@ -220,7 +221,7 @@ const ThreadRoot: FC<{ isEmpty: boolean; autoFocus: boolean }> = ({
       >
         <div
           className={cn(
-            "mx-auto flex w-full max-w-(--thread-max-width) flex-1 flex-col px-4 pt-4",
+            "aui-thread-content mx-auto flex w-full max-w-(--thread-max-width) flex-1 flex-col px-4 pt-4",
             isEmpty && "justify-center",
           )}
         >
@@ -231,6 +232,9 @@ const ThreadRoot: FC<{ isEmpty: boolean; autoFocus: boolean }> = ({
             <ThreadHistorySkeleton />
           </AuiIf>
 
+          <AuiIf condition={(s) => !isNewChatView(s) && !isHistoryLoadingView(s)}>
+            <div className="editorial-conversation-heading"><span><i aria-hidden="true" /> 对话记录</span><span>Agent Workshop</span></div>
+          </AuiIf>
           <ThreadLoadEarlier />
 
           <div
@@ -450,6 +454,7 @@ const ThreadScrollToBottom: FC = () => {
 const ThreadWelcome: FC = () => {
   return (
     <div className="aui-thread-welcome-root mb-6 flex flex-col px-2">
+      <p className="editorial-eyebrow"><span /> 继续推进</p>
       <p className="aui-thread-welcome-message-inner fade-in slide-in-from-bottom-1 animate-in fill-mode-both text-2xl font-medium tracking-tight duration-200">
         说说你的想法
       </p>
