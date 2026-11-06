@@ -31,7 +31,7 @@ export function SettingsPage() {
       const res = await api.saveSettings({ provider, api_key: key, model, base_url: baseUrl })
       setMsg({
         ok: res.ok,
-        text: res.ok ? `${res.message}，已保存到本机。` : `${res.message}。请检查 Key 是否复制完整、账户是否有余额。`,
+        text: res.ok ? `${res.message}，已保存到本机。` : res.message,
       })
       if (res.ok) {
         setKey("")
@@ -107,7 +107,7 @@ export function SettingsPage() {
               ) : (
                 "Key 和接口地址向你用的中转服务商要。"
               )}
-              Key 只保存在你自己电脑上的 .env 文件里，不会上传到别处。
+              Key 保存在本机 .env 文件中，仅用于向你选择的模型服务发起请求，不会提交到项目仓库。
             </p>
             {current.key === "openai" && (
               <p className="mt-1 text-xs text-muted-foreground">

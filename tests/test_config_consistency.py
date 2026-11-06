@@ -53,3 +53,18 @@ def test_student_package_ships_common_bootstrap():
     names = {p.relative_to(ROOT).as_posix() for p in mod.collect_files(ROOT)}
     assert "common/bootstrap.py" in names
     assert "common/__init__.py" in names
+
+
+@pytest.mark.parametrize("missing", ["anthropic", "dotenv"])
+def test_real_ui_rejects_incomplete_python_environment(monkeypatch, capsys, missing):
+    import argparse
+    import importlib.util
+    from blueprint.cli import cmd_ui
+    from blueprint.web import server
+
+    real_find = importlib.util.find_spec
+    monkeypatch.setattr(importlib.util, "find_spec", lambda name: None if name == missing else real_find(name))
+    monkeypatch.setattr(server, "serve", lambda *a, **kw: pytest.fail("must not open an unusable real-model UI"))
+    assert cmd_ui(argparse.Namespace(mock=False, port=8765, no_browser=True)) == 1
+    output = capsys.readouterr().out
+    assert missing in output and ".venv/bin/python" in output

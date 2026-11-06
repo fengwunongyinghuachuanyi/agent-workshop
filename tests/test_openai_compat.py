@@ -116,3 +116,15 @@ def test_write_env_switches_format_and_keeps_other_lines(tmp_path):
     providers.write_env("sk-ds", "deepseek-v4-flash", "https://api.deepseek.com/anthropic", path=env)
     data = providers.read_env(env)
     assert providers.current_config(data)["format"] == "anthropic" and "API_FORMAT" not in data
+
+
+def test_anthropic_runner_binds_api_key_without_inherited_bearer_token(monkeypatch):
+    import anthropic
+    monkeypatch.setenv("API_FORMAT", "anthropic")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-workshop-test-key")
+    monkeypatch.setenv("ANTHROPIC_AUTH_TOKEN", "other-tool-test-token")
+    monkeypatch.setenv("ANTHROPIC_BASE_URL", "https://workshop.example/anthropic")
+    runner = AnthropicRunner()
+    assert runner.client.api_key == "sk-workshop-test-key"
+    assert runner.client.auth_token is None
+    assert str(runner.client.base_url) == "https://workshop.example/anthropic/"

@@ -148,6 +148,13 @@ def cmd_handoff(args) -> int:
 
 
 def cmd_ui(args) -> int:
+    if not args.mock:
+        import importlib.util
+        missing = [name for name in ("anthropic", "dotenv") if importlib.util.find_spec(name) is None]
+        if missing:
+            print("当前 Python 环境缺少模型运行依赖：" + ", ".join(missing))
+            print("请双击「启动界面.command」，或先运行 bash setup.sh，再用 .venv/bin/python -m blueprint ui 启动。")
+            return 1
     from blueprint.web.server import serve
     serve(DEFAULT_OUT, port=args.port, mock=args.mock, open_browser=not args.no_browser)
     return 0

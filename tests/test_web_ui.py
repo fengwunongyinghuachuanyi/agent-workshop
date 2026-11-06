@@ -135,7 +135,7 @@ def test_save_settings_tests_connection_and_keeps_other_env_lines(tmp_path, monk
     assert res["ok"]
     saved = providers.read_env(env)
     assert saved["ANTHROPIC_API_KEY"] == "sk-real-0123456789"
-    assert saved["MODEL_ID"] == "deepseek-v4-flash"
+    assert saved["MODEL_ID"] == "deepseek-flash"
     assert saved["BLUEPRINT_MAX_OUTPUT_TOKENS"] == "32000"
     settings = app.settings()
     assert settings["configured"] and settings["provider"] == "deepseek"
@@ -606,3 +606,27 @@ def test_new_audit_is_readable_before_background_scan_finishes(server, app, tmp_
         if job is not None:
             wait_job(job)
     assert job is not None and job.status == "done", job.error if job else "no job"
+
+
+def test_real_web_start_applies_saved_configuration_over_launcher_env(tmp_path, monkeypatch):
+    from blueprint.web import server as web
+    clear_env(monkeypatch)
+    env = tmp_path / ".env"
+    providers.write_env("sk-workshop-saved-key", "deepseek-flash", "https://api.deepseek.com/anthropic", path=env)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-launcher-other-key")
+    monkeypatch.setenv("ANTHROPIC_BASE_URL", "https://launcher.example")
+    app = App(tmp_path / "out", env_path=env)
+    monkeypatch.setattr(web, "App", lambda *a, **kw: app)
+
+    class FakeServer:
+        server_address = ("127.0.0.1", 8765)
+        def serve_forever(self):
+            import os
+            assert os.environ["ANTHROPIC_API_KEY"] == "sk-workshop-saved-key"
+            assert os.environ["ANTHROPIC_BASE_URL"] == "https://api.deepseek.com/anthropic"
+            assert os.environ["MODEL_ID"] == "deepseek-flash"
+        def server_close(self):
+            pass
+
+    monkeypatch.setattr(web, "create_server", lambda *a, **kw: FakeServer())
+    web.serve(tmp_path / "out", open_browser=False)

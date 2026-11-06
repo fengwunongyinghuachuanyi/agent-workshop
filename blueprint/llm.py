@@ -187,7 +187,12 @@ class AnthropicRunner:
             from blueprint.openai_compat import OpenAICompatClient
             self.name = "openai"
             client = OpenAICompatClient(os.getenv("OPENAI_API_KEY", ""), os.getenv("OPENAI_BASE_URL") or None, timeout)
-        self.client = client or Anthropic(base_url=os.getenv("ANTHROPIC_BASE_URL"), timeout=timeout, max_retries=0)
+        # Match connection testing: explicitly bind the selected API key so SDK
+        # credential discovery cannot mix in another tool's bearer token.
+        api_key = os.getenv("ANTHROPIC_API_KEY") or None
+        auth_token = None if api_key else (os.getenv("ANTHROPIC_AUTH_TOKEN") or None)
+        self.client = client or Anthropic(api_key=api_key, auth_token=auth_token,
+                                          base_url=os.getenv("ANTHROPIC_BASE_URL"), timeout=timeout, max_retries=0)
         # 带思考过程的模型（如 deepseek-v4）思考 token 也计入 max_tokens，长 PRD 时 16000 可能不够；
         # 可用环境变量 BLUEPRINT_MAX_OUTPUT_TOKENS 调大。
         self.max_tokens = max_tokens or int(os.getenv("BLUEPRINT_MAX_OUTPUT_TOKENS", "16000"))

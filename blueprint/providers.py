@@ -9,7 +9,7 @@ ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 
 PROVIDERS = {
     "1": {"key": "deepseek", "name": "DeepSeek（推荐）", "base": "https://api.deepseek.com/anthropic",
-          "model": "deepseek-v4-flash", "key_page": "https://platform.deepseek.com"},
+          "model": "deepseek-flash", "key_page": "https://platform.deepseek.com"},
     "2": {"key": "glm", "name": "智谱 GLM", "base": "https://open.bigmodel.cn/api/anthropic",
           "model": "glm-5.2", "key_page": "https://open.bigmodel.cn"},
     "3": {"key": "kimi", "name": "Kimi 月之暗面", "base": "https://api.moonshot.cn/anthropic",

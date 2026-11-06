@@ -609,6 +609,11 @@ def create_server(app: App, port: int = 8765) -> ThreadingHTTPServer:
 
 def serve(out_root: Path, port: int = 8765, mock: bool = False, open_browser: bool = True) -> None:
     app = App(out_root, mock=mock)
+    # The local workspace configuration takes precedence over credentials from
+    # the shell/editor that launched this web server.
+    if not mock and providers.has_real_key(app.env_path):
+        cfg = providers.current_config(providers.read_env(app.env_path))
+        providers.apply_to_process(cfg["key"], cfg["model"], cfg["base"], fmt=cfg["format"])
     server = create_server(app, port)
     url = f"http://127.0.0.1:{server.server_address[1]}/"
     print(f"✅ 界面已启动：{url}")
